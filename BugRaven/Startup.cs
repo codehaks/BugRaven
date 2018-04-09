@@ -18,13 +18,16 @@ namespace BugRaven
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            DocumentStoreHolder.DatabaseName = "BugRavenDb";
+            var urls = new string[] { "http://127.0.0.1:8080" };
+            DocumentStoreHolder.Urls = urls;
+            DocumentStoreHolder.Store.Initialize();
+
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

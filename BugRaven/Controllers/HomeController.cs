@@ -1,20 +1,21 @@
-﻿using System;
+﻿using BugRaven.Models;
+using Microsoft.AspNetCore.Mvc;
+using Raven.Client.Documents;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using BugRaven.Models;
 
 namespace BugRaven.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IList<Models.Bug> model = new List<Models.Bug>();
-
-            return View(model);
+            using (var session = DocumentStoreHolder.Store.OpenAsyncSession())
+            {
+                var model = await session.Query<Bug>().ToListAsync();
+                return View(model);
+            };
         }
 
         [HttpGet]
@@ -26,6 +27,12 @@ namespace BugRaven.Controllers
         [HttpPost]
         public IActionResult Create(Bug model)
         {
+            using (var session = DocumentStoreHolder.Store.OpenSession())
+            {
+                session.Store(model);
+                session.SaveChanges();
+            };
+
             return RedirectToAction(nameof(Index));
         }
 
