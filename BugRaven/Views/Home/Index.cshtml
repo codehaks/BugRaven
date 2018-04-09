@@ -1,0 +1,36 @@
+﻿@model IList<BugRaven.Models.Bug>
+@{
+    var i = 1;
+}
+
+<h2>Bug Raven</h2>
+<hr>
+
+<a asp-action="create" asp-controller="home" class="btn btn-success">Create new</a>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Desc</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@movie.Name</td>
+                <td>@movie.Description</td>
+                <td>
+                    @*<a asp-action="details" asp-route-id="@movie.Id" class="btn btn-default">Details</a>
+                        <a asp-action="delete" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
+                        <a asp-action="edit" asp-route-id="@movie.Id" class="btn btn-primary">Edit</a>*@
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
