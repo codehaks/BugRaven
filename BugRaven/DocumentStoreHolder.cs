@@ -19,8 +19,11 @@ namespace BugRaven
             var store = new DocumentStore
             {
                 Urls = Urls,
-                Database = DatabaseName
-            }.Initialize();
+                Database = DatabaseName,
+            };
+            store.Conventions.IdentityPartsSeparator = "-";
+
+            store.Initialize();
 
             return store;
         }

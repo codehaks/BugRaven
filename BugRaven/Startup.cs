@@ -23,7 +23,6 @@ namespace BugRaven
             DocumentStoreHolder.DatabaseName = "BugRavenDb";
             var urls = new string[] { "http://127.0.0.1:8080" };
             DocumentStoreHolder.Urls = urls;
-            DocumentStoreHolder.Store.Initialize();
 
             services.AddMvc();
         }
@@ -46,7 +45,11 @@ namespace BugRaven
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}");
+
+                routes.MapRoute(
+                    name: "default1",
+                    template: "{controller=Home}/{action=Index}/{*id}");
             });
         }
     }
