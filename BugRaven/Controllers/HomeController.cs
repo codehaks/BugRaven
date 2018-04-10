@@ -18,6 +18,15 @@ namespace BugRaven.Controllers
             };
         }
 
+        public async Task<IActionResult> Details()
+        {
+            using (var session = DocumentStoreHolder.Store.OpenAsyncSession())
+            {
+                var model = await session.Query<Bug>().ToListAsync();
+                return View(model);
+            };
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
